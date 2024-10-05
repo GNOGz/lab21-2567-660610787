@@ -25,7 +25,6 @@ export default function Home() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [loadingLogin, setLoadingLogin] = useState(false);
-
   // declare useRouter
   const router = useRouter();
 
@@ -46,7 +45,7 @@ export default function Home() {
       const resp = await axios.post("/api/user/login", { username, password });
       localStorage.setItem("token", resp.data.token);
       localStorage.setItem("authenUsername", resp.data.username);
-
+      console.log(resp);
       //save token and authenUsername to global store
       $authenStore.set({
         token: resp.data.token,
