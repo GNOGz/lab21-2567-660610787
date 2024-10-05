@@ -23,7 +23,6 @@ export default function StudentPage() {
   const [myEnrollments, setMyEnrollments] = useState<StrangeEnrollment[] | null>(null);
   const [loadingMyEnrollments, setLoadingMyEnrollments] = useState(false);
 
-  //const [loadingEnrolling, setLoadingEnrolling] = useState(false);
   const [loadingDropping, setLoadingDropping] = useState("");
   const [courseNo, setCourseNo] = useState("");
   const router = useRouter();
