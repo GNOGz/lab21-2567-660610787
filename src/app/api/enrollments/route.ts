@@ -70,6 +70,7 @@ export const POST = async (request: NextRequest) => {
   //read body request
   const body = await request.json();
   const { courseNo } = body;
+
   if (typeof courseNo !== "string" || courseNo.length !== 6) {
     return NextResponse.json(
       {
@@ -80,8 +81,43 @@ export const POST = async (request: NextRequest) => {
     );
   }
 
-  // Coding in lecture
+  const prisma = getPrisma();
 
+  const courses = await prisma.enrollment.findMany({
+    where: { courseNo: courseNo },
+  });
+
+  if(!courses){
+    return NextResponse.json(
+      {
+        ok: false,
+        message: "Course number does not exist",
+      },
+      { status: 400 }
+    );
+  }
+ 
+  const enrollments = await prisma.enrollment.findUnique({
+    where:{courseNo_studentId:{courseNo:courseNo, studentId:studentId}}
+  })
+
+  if (enrollments) {
+    return NextResponse.json(
+      {
+        ok: false,
+        message: "You already registered this course",
+      },
+      { status: 400 }
+    );
+  }
+
+  const user = await prisma.enrollment.create({
+    data: {
+      courseNo: courseNo,
+      studentId: studentId,
+    },
+  })
+  console.log(user);
   return NextResponse.json({
     ok: true,
     message: "You has enrolled a course successfully",
