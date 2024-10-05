@@ -37,6 +37,7 @@ export default function RootLayout({
         const resp = await axios.get("/api/user/checkAuthen", {
           headers: { Authorization: `Bearer ${token}` },
         });
+        console.log(resp);
         $authenStore.set({ token, authenUsername });
       } catch (err) {
         console.log(err.message);

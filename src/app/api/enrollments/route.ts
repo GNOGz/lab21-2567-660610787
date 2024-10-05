@@ -1,5 +1,5 @@
 import { checkToken } from "@lib/checkToken";
-import { Database, Payload } from "@lib/types";
+import { Payload } from "@lib/types";
 import { NextRequest, NextResponse } from "next/server";
 import { getPrisma } from "@lib/getPrisma";
 
@@ -136,7 +136,7 @@ export const DELETE = async (request: NextRequest) => {
       { status: 401 }
     );
   }
-  const { role, studentId } = <Payload>payload;
+  const { role } = <Payload>payload;
 
   if (role === "ADMIN") {
     return NextResponse.json(
@@ -161,7 +161,6 @@ export const DELETE = async (request: NextRequest) => {
     );
   }
 
-  const prisma = getPrisma();
   // Perform data delete
 
   return NextResponse.json({
